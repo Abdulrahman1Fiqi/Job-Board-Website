@@ -8,12 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\JobCategory;
 use App\Models\Company;
+use App\Models\JobApplication;
 
 class JobVacancy extends Model
 {
     use HasFactory,HasUuids,SoftDeletes;
     
-    protected $table = 'companies';
+    protected $table = 'job_vacancies';
     protected $keyType = "string";
 
     public $incrementing = false;
@@ -46,4 +47,9 @@ class JobVacancy extends Model
     public function company(){
         return $this->belongsTo(Company::class,'companyId','id');
     }
+    public function jobApplications(){
+        return $this->hasMany(JobApplication::class,'jobVacancyId','id');
+    }
+
+    
 }
