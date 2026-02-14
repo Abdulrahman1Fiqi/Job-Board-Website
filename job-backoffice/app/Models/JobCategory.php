@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use App\Models\JobVacancy;
 class JobCategory extends Model
 {
     use HasFactory, HasUuids, SoftDeletes;
@@ -29,5 +29,9 @@ class JobCategory extends Model
         return [
             'deleted_at' => 'datetime',
         ];
+    }
+
+    public function jobVacancies(){
+        return $this->hasMany(JobVacancy::class,'categoryId','id');
     }
 }

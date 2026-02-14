@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\JobVacancy;
 
 class Company extends Model
 {
@@ -37,5 +38,9 @@ class Company extends Model
 
     public function owner(){
         return $this->belongsTo(User::class,'ownerId','id');
+    }
+
+    public function jobVacancies(){
+        return $this->hasMany(JobVacancy::class,'companyId','id');
     }
 }
