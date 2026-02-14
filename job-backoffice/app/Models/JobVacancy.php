@@ -25,7 +25,7 @@ class JobVacancy extends Model
         'location',
         'salary',
         'type',
-        'categoryId',
+        'jobCategoryId',
         'companyId',
     ];
 
@@ -41,7 +41,7 @@ class JobVacancy extends Model
     }
 
     public function jobCategory(){
-        return $this->belongsTo(JobCategory::class,'categoryId','id');
+        return $this->belongsTo(JobCategory::class,'jobCategoryId','id');
     }
 
     public function company(){
