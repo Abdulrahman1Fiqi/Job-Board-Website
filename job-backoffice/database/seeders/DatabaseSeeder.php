@@ -9,6 +9,9 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use App\Models\JobCategory;
 use App\Models\JobVacancy;
+use App\Models\Resume;
+use App\Models\JobApplication;
+
 class DatabaseSeeder extends Seeder
 {
     use WithoutModelEvents;
@@ -32,6 +35,7 @@ class DatabaseSeeder extends Seeder
 
         // Seed Data to test with
         $jobData = json_decode(file_get_contents(database_path('data/job_data.json')),true);
+        $jobApplications = json_decode(file_get_contents(database_path('data/job_applications.json')),true);
 
         // Create Job Categories
         foreach ($jobData['jobCategories'] as $category){
@@ -72,14 +76,54 @@ class DatabaseSeeder extends Seeder
 
             JobVacancy::firstOrCreate([
                 'title'=> $job['title'],
+                'companyId'=> $company->id,
             ],[
                 'description'=> $job['description'],
                 'location' => $job['location'],
                 'type' => $job['type'],
                 'salary'=> $job['salary'],
                 'jobCategoryId'=> $jobCategory->id,
-                'companyId'=> $company->id,
             ]);
         }
+
+        // Create Job Applications
+        foreach ($jobApplications['jobApplications'] as $application){
+            // Get random job vacancy
+            $jobVacancy = JobVacancy::inRandomOrder()->first();
+
+            // Create applicant (job-seeker)
+            $applicant = User::firstOrCreate([
+                'email'=> fake()->unique()->safeEmail(),
+            ], [
+                'name'=> fake()->name(),
+                'password'=> Hash::make('12345678'),
+                'role'=> 'job-seeker',
+                'email_verified_at' => now(),
+            ]);
+
+            // Create resume 
+            $resume = Resume::create([
+                'userId'=> $applicant->id,
+                'filename'=> $application['resume']['filename'],
+                'fileUrl'=> $application['resume']['fileUrl'],
+                'contactDetails'=> $application['resume']['contactDetails'],
+                'summary'=> $application['resume']['summary'],
+                'skills'=> $application['resume']['skills'],
+                'experience'=> $application['resume']['experience'],
+                'education'=> $application['resume']['education'],
+            ]);
+
+            // Create job application after making important relations
+            JobApplication::create([
+                'status'=> $application['status'],
+                'aiGeneratedScore'=> $application['aiGeneratedScore'],
+                'aiGeneratedFeedback'=> $application['aiGeneratedFeedback'],
+                'jobVacancyId'=> $jobVacancy->id,
+                'userId'=> $applicant->id,
+                'resumeId'=> $resume->id,
+            ]);
+
+        }
+
     }
 }

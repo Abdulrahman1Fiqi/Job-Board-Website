@@ -6,7 +6,7 @@
             "aiGeneratedFeedback": "Strong candidate with relevant experience in frontend development. Good match for the position based on skills and experience.",
             "resume": {
                 "filename": "john_doe_resume.pdf",
-                "fileUri": "resumes/john_doe_resume.pdf",
+                "fileUrl": "resumes/john_doe_resume.pdf",
                 "contactDetails": "Phone: (555) 123-4567, Email: john.doe@example.com, LinkedIn: linkedin.com/in/johndoe",
                 "summary": "Experienced frontend developer with 5+ years of experience building responsive and interactive user interfaces. Proficient in React.js, TypeScript, and modern CSS frameworks.",
                 "skills": "React.js, TypeScript, JavaScript, HTML5, CSS3, Tailwind CSS, Redux, Next.js, Git, Responsive Design",
@@ -20,7 +20,7 @@
             "aiGeneratedFeedback": "Candidate lacks sufficient experience in backend development. Skills don't fully align with the position requirements.",
             "resume": {
                 "filename": "jane_smith_resume.pdf",
-                "fileUri": "resumes/jane_smith_resume.pdf",
+                "fileUrl": "resumes/jane_smith_resume.pdf",
                 "contactDetails": "Phone: (555) 987-6543, Email: jane.smith@example.com, LinkedIn: linkedin.com/in/janesmith",
                 "summary": "Junior developer with 2 years of experience in web development. Looking to transition into backend development roles.",
                 "skills": "JavaScript, HTML5, CSS3, Node.js (basic), Express.js (basic), MongoDB (basic), Git",
@@ -34,7 +34,7 @@
             "aiGeneratedFeedback": "Exceptional candidate with extensive experience in full stack development. Perfect match for the position with strong technical skills and leadership experience.",
             "resume": {
                 "filename": "michael_johnson_resume.pdf",
-                "fileUri": "resumes/michael_johnson_resume.pdf",
+                "fileUrl": "resumes/michael_johnson_resume.pdf",
                 "contactDetails": "Phone: (555) 456-7890, Email: michael.johnson@example.com, LinkedIn: linkedin.com/in/michaeljohnson",
                 "summary": "Senior full stack developer with 8+ years of experience building scalable web applications. Strong expertise in both frontend and backend technologies with a focus on performance and user experience.",
                 "skills": "React.js, Node.js, TypeScript, Express.js, MongoDB, PostgreSQL, Docker, Kubernetes, AWS, CI/CD, Git, Agile Methodologies",
@@ -48,7 +48,7 @@
             "aiGeneratedFeedback": "Good candidate with relevant experience in DevOps. Skills align well with the position requirements.",
             "resume": {
                 "filename": "sarah_williams_resume.pdf",
-                "fileUri": "resumes/sarah_williams_resume.pdf",
+                "fileUrl": "resumes/sarah_williams_resume.pdf",
                 "contactDetails": "Phone: (555) 234-5678, Email: sarah.williams@example.com, LinkedIn: linkedin.com/in/sarahwilliams",
                 "summary": "DevOps engineer with 4 years of experience in cloud infrastructure and CI/CD pipelines. Passionate about automation and infrastructure as code.",
                 "skills": "Docker, Kubernetes, AWS, Azure, Terraform, Jenkins, GitLab CI, Ansible, Linux, Bash, Python, Monitoring Tools",
@@ -62,7 +62,7 @@
             "aiGeneratedFeedback": "Candidate has some relevant skills but lacks the required experience level for this senior position.",
             "resume": {
                 "filename": "david_brown_resume.pdf",
-                "fileUri": "resumes/david_brown_resume.pdf",
+                "fileUrl": "resumes/david_brown_resume.pdf",
                 "contactDetails": "Phone: (555) 876-5432, Email: david.brown@example.com, LinkedIn: linkedin.com/in/davidbrown",
                 "summary": "Software developer with 3 years of experience in backend development. Looking to advance my career in cloud engineering.",
                 "skills": "Java, Spring Boot, MySQL, Docker (basic), AWS (basic), Git, RESTful APIs, Microservices",
@@ -76,7 +76,7 @@
             "aiGeneratedFeedback": "Strong candidate with relevant experience in mobile development. Good match for the position based on skills and experience.",
             "resume": {
                 "filename": "emily_davis_resume.pdf",
-                "fileUri": "resumes/emily_davis_resume.pdf",
+                "fileUrl": "resumes/emily_davis_resume.pdf",
                 "contactDetails": "Phone: (555) 345-6789, Email: emily.davis@example.com, LinkedIn: linkedin.com/in/emilydavis",
                 "summary": "Mobile developer with 5 years of experience building cross-platform applications. Proficient in React Native and native development for iOS and Android.",
                 "skills": "React Native, JavaScript, TypeScript, Swift, Kotlin, Firebase, RESTful APIs, Git, Mobile UI/UX Design",
@@ -90,7 +90,7 @@
             "aiGeneratedFeedback": "Excellent candidate with extensive experience in software architecture. Perfect match for the position with strong technical skills and leadership experience.",
             "resume": {
                 "filename": "robert_taylor_resume.pdf",
-                "fileUri": "resumes/robert_taylor_resume.pdf",
+                "fileUrl": "resumes/robert_taylor_resume.pdf",
                 "contactDetails": "Phone: (555) 567-8901, Email: robert.taylor@example.com, LinkedIn: linkedin.com/in/roberttaylor",
                 "summary": "Software architect with 10+ years of experience designing and implementing scalable software systems. Strong expertise in cloud-native architectures and microservices.",
                 "skills": "Software Architecture, Microservices, Event-Driven Architecture, Domain-Driven Design, Cloud Native, AWS, Azure, Docker, Kubernetes, CI/CD, Git, Agile Methodologies",
@@ -104,7 +104,7 @@
             "aiGeneratedFeedback": "Good candidate with relevant experience in frontend development. Skills align well with the position requirements.",
             "resume": {
                 "filename": "lisa_anderson_resume.pdf",
-                "fileUri": "resumes/lisa_anderson_resume.pdf",
+                "fileUrl": "resumes/lisa_anderson_resume.pdf",
                 "contactDetails": "Phone: (555) 678-9012, Email: lisa.anderson@example.com, LinkedIn: linkedin.com/in/lisaanderson",
                 "summary": "Frontend developer with 4 years of experience building responsive and interactive user interfaces. Proficient in modern JavaScript frameworks and CSS.",
                 "skills": "Vue.js, JavaScript, TypeScript, HTML5, CSS3, Tailwind CSS, Vuex, Git, Responsive Design, UI/UX",
@@ -118,7 +118,7 @@
             "aiGeneratedFeedback": "Candidate has some relevant skills but lacks the required experience level for this senior position.",
             "resume": {
                 "filename": "james_wilson_resume.pdf",
-                "fileUri": "resumes/james_wilson_resume.pdf",
+                "fileUrl": "resumes/james_wilson_resume.pdf",
                 "contactDetails": "Phone: (555) 789-0123, Email: james.wilson@example.com, LinkedIn: linkedin.com/in/jameswilson",
                 "summary": "Backend developer with 2 years of experience in API development. Looking to advance my career in backend development.",
                 "skills": "Node.js, Express.js, JavaScript, MongoDB, RESTful APIs, Git, Basic DevOps",
@@ -132,7 +132,7 @@
             "aiGeneratedFeedback": "Strong candidate with relevant experience in full stack development. Good match for the position based on skills and experience.",
             "resume": {
                 "filename": "patricia_martinez_resume.pdf",
-                "fileUri": "resumes/patricia_martinez_resume.pdf",
+                "fileUrl": "resumes/patricia_martinez_resume.pdf",
                 "contactDetails": "Phone: (555) 890-1234, Email: patricia.martinez@example.com, LinkedIn: linkedin.com/in/patriciamartinez",
                 "summary": "Full stack developer with 5 years of experience building end-to-end web applications. Proficient in both frontend and backend technologies with a focus on performance and user experience.",
                 "skills": "React.js, Node.js, JavaScript, TypeScript, Express.js, MongoDB, PostgreSQL, Docker, Git, RESTful APIs, Agile Methodologies",
