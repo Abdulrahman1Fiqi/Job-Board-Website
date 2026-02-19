@@ -8,6 +8,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use App\Models\JobCategory;
+use App\Models\JobVacancy;
 class DatabaseSeeder extends Seeder
 {
     use WithoutModelEvents;
@@ -59,7 +60,26 @@ class DatabaseSeeder extends Seeder
                 'website' => $company['website'],
                 'ownerId' => $companyOwner->id,
             ]);
-            
+        }
+
+        // Create Job Vancancies
+        foreach ($jobData['jobVacancies'] as $job){
+            // Get the created company
+            $company = Company::where('name',$job['company'])->firstOrFail();
+
+            // Get the created job category
+            $jobCategory = JobCategory::where('name',$job['category'])->firstOrFail();
+
+            JobVacancy::firstOrCreate([
+                'title'=> $job['title'],
+            ],[
+                'description'=> $job['description'],
+                'location' => $job['location'],
+                'type' => $job['type'],
+                'salary'=> $job['salary'],
+                'jobCategoryId'=> $jobCategory->id,
+                'companyId'=> $company->id,
+            ]);
         }
     }
 }
