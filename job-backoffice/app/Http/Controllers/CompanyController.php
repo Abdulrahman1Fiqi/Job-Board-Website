@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\JobApplication;
 use Illuminate\Http\Request;
 use App\Models\Company;
 use App\Http\Requests\CompanyCreateRequest;
 use App\Http\Requests\CompanyUpdateRequest;
-
 
 class CompanyController extends Controller
 {
@@ -50,7 +50,12 @@ class CompanyController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $company = Company::findOrFail($id);
+
+    
+
+
+        return view('company.show',compact('company'));
     }
 
     /**
