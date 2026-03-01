@@ -18,6 +18,7 @@
           <!-- Company Details -->
             <div>
                 <h3 class="text-lg font-bold">Company Information</h3>
+                <p><strong>Owner:</strong>{{ $company->owner->name }}</p>
                 <p><strong>Address:</strong>{{ $company->address }}</p>
                 <p><strong>Industry:</strong>{{ $company->industry }}</p>
                 <p><strong>Website:</strong><a href="{{ $company->website }}" 
