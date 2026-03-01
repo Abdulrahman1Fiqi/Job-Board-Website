@@ -10,8 +10,14 @@ use App\Http\Requests\CompanyUpdateRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
+
+
 class CompanyController extends Controller
 {
+
+    
+    public $industries = ['Technology','Finance','Healthcare','Education','Manufacturing','Retail','Other'];
+    
     /**
      * Display a listing of the resource.
      */
@@ -34,7 +40,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        $industries = ['Technology','Finance','Healthcare','Education','Manufacturing','Retail','Other'];
+        $industries =$this->industries;
         return view('company.create',compact('industries'));
     }
 
@@ -89,7 +95,8 @@ class CompanyController extends Controller
     public function edit(string $id)
     {
         $company = Company::findOrFail($id);
-        return view('company.edit',compact('company'));
+        $industries =$this->industries;
+        return view('company.edit',compact('company','industries'));
     }
 
     /**
@@ -99,8 +106,31 @@ class CompanyController extends Controller
     {
         $validated = $request->validated();
         $company = Company::findOrFail($id);
-        $company->update($validated);
-        return redirect()->route('companies.index')->with('success','Company updated successfully!');
+
+        $company->update([
+            'name'=> $validated['name'],
+            'address'=> $validated['address'],
+            'industry'=> $validated['industry'],
+            'website'=> $validated['website'],
+        ]);
+
+        // Update Owner
+        $ownerData = [];
+        $ownerData['name']= $validated['owner_name'];
+
+        if($validated['owner_password']){
+            $ownerData['password'] = Hash::make($validated['owner_password']);
+        }
+
+        $company->owner->update($ownerData);
+
+        if($request->query('redirectToList') == 'false'){
+                    return redirect()->route('companies.show',$id)->with('success','Company updated successfully!');
+        }
+
+        return redirect()->route('companies.index')->with('success','Company updated successfully!');    
+        
+        
     }
 
     /**
