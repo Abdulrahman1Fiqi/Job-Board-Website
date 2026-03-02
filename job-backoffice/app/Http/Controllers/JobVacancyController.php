@@ -3,15 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\JobVacancy;
 
 class JobVacancyController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('job-vacancy.index');
+        //Active
+        $query = JobVacancy::latest();
+
+        //Archived
+        if($request->input('archived') == 'true'){
+            $query->onlyTrashed();
+        };
+
+        $jobVacancies = $query->paginate(10)->onEachSide(1);
+        return view('job-vacancy.index',compact('jobVacancies'));
     }
 
     /**
