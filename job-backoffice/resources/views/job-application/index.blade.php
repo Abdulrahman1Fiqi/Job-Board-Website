@@ -48,7 +48,7 @@
                             
                         <td class="px-6 py-4 text-gray-800">{{ $jobApplication->jobVacancy?->title ?? 'N/A' }}</td>
                         <td class="px-6 py-4 text-gray-800">{{ $jobApplication->jobVacancy?->company?->name ?? 'N/A'}}</td>
-                        <td class="px-6 py-4 text-gray-800">{{ $jobApplication->status }}</td>
+                        <td class="px-6 py-4 text-gray-800 @if($jobApplication->status == 'accepted') text-green-500 @elseif($jobApplication->status =='rejected') text-red-500 @else text-purple-500 @endif">{{ $jobApplication->status }}</td>
                         
                         <td>
                             <div class="flex space-x-4">

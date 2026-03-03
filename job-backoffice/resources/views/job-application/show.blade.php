@@ -21,7 +21,7 @@
                 <p><strong>Applicant:</strong>{{ $jobApplication->user->name }}</p>
                 <p><strong>Job Vacancy:</strong>{{ $jobApplication->jobVacancy->title }}</p>
                 <p><strong>Company:</strong>{{ $jobApplication->jobVacancy->company->name }}</p>
-                <p><strong>Status:</strong>{{ $jobApplication->status }}</p>
+                <p><strong>Status:</strong><span class="@if($jobApplication->status == 'accepted') text-green-500 @elseif($jobApplication->status =='rejected') text-red-500 @else text-purple-500 @endif">{{ $jobApplication->status }}</span></p>
                 <p><strong>Resume:</strong><a href="{{ $jobApplication->resume->fileUrl}}" 
                 target="_blank" class="text-blue-500 hover:text-blue-700 ">{{ $jobApplication->resume->fileUrl }}</a></p>
 
