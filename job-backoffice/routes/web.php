@@ -20,6 +20,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/companies/{id}/restore',[ CompanyController::class,'restore'])->name('companies.restore');
     // Job Applications
     Route::resource('/job-applications', JobApplicationController::class);
+    Route::put('/job-applications/{id}/restore',[JobApplicationController::class,'restore'])->name('job-applications.restore');
     // Job Categories
     Route::resource('/job-categories', JobCategoryController::class);
     Route::put('/job-categories/{id}/restore',[JobCategoryController::class,'restore'])->name('job-categories.restore');
