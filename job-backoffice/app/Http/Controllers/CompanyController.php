@@ -79,9 +79,10 @@ class CompanyController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id = null)
     {
-        $company = Company::findOrFail($id);
+        $company =$this->getCompany($id);
+        
 
         return view('company.show',compact('company'));
     }
@@ -89,9 +90,10 @@ class CompanyController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id = null)
     {
-        $company = Company::findOrFail($id);
+        $company =$this->getCompany($id);
+
         $industries =$this->industries;
         return view('company.edit',compact('company','industries'));
     }
@@ -99,10 +101,12 @@ class CompanyController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(CompanyUpdateRequest $request, string $id)
+    public function update(CompanyUpdateRequest $request, string $id = null)
     {
         $validated = $request->validated();
-        $company = Company::findOrFail($id);
+
+        $company =$this->getCompany($id);
+        
 
         $company->update([
             'name'=> $validated['name'],
@@ -120,6 +124,10 @@ class CompanyController extends Controller
         }
 
         $company->owner->update($ownerData);
+
+        if(auth()->user()->role == 'company-owner'){
+            return redirect()->route('my-company.show')->with('success','Company updated successfully!');                
+        }
 
         if($request->query('redirectToList') == 'false'){
                     return redirect()->route('companies.show',$id)->with('success','Company updated successfully!');
@@ -145,5 +153,15 @@ class CompanyController extends Controller
         $company = Company::withTrashed()->findOrFail($id);
         $company->restore();
         return redirect()->route('companies.index',['archived'=>'true'])->with('success','Company restored successfully!');
+    }
+
+    private function getCompany(string $id =null)
+    {
+    
+        if($id){
+            return Company::findOrFail($id);
+        }
+
+            return Company::where('ownerId',auth()->user()->id)->first();
     }
 }

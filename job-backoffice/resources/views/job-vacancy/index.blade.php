@@ -37,7 +37,9 @@
             <thead>
                 <tr>
                     <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">Title</th>
-                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">Company</th>
+                    @if(auth()->user()->role == 'admin')
+                        <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">Company</th>
+                    @endif
                     <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">Location</th>
                     <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">Type</th>
                     <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">Salary</th>
@@ -53,8 +55,9 @@
                             @else
                             <a class="text-blue-500 hover:text-blue-700 underline" href="{{ route('job-vacancies.show',$jobVacancy->id) }}">{{ $jobVacancy->title }}</a></td>
                             @endif
-                            
+                        @if(auth()->user()->role == 'admin')
                         <td class="px-6 py-4 text-gray-800">{{ $jobVacancy->company->name }}</td>
+                        @endif
                         <td class="px-6 py-4 text-gray-800">{{ $jobVacancy->location }}</td>
                         <td class="px-6 py-4 text-gray-800">{{ $jobVacancy->type }}</td>
                         <td class="px-6 py-4 text-gray-800">${{ number_format($jobVacancy->salary,2) }}</td>
