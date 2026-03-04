@@ -12,7 +12,7 @@ use App\Http\Controllers\UserController;
 
 
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth','role:admin,company-owner'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     // Companies
