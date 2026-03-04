@@ -13,19 +13,16 @@ class RoleMiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, $roles): Response
+    public function handle(Request $request, Closure $next, ...$roles): Response
     {
+        
         // Check has no access
         if(auth()->check()){
-            $role = auth()->user()->role;
+            $userRole = auth()->user()->role;
 
-            $roles = explode(',', $roles);
-            
-            $hasAccess = in_array($role,$roles);
-
-            if(!$hasAccess){
-                abort(403);
-            }
+        if (!in_array($userRole, $roles)) {
+            abort(403);
+        }
         }
 
         // Has access
