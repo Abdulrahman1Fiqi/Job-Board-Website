@@ -60,7 +60,7 @@
         <!-- Job item -->
         <div class="border-b border-white/10 pb-4 flex justify-between items-center">
              <div>
-                <a class="text-lg font-semibold text-blue-400 hover:underline">{{ $job->title }}</a>
+                <a href="{{ route('job-vacancies.show',$job->id) }}" class="text-lg font-semibold text-blue-400 hover:underline">{{ $job->title }}</a>
                 <p class="text-sm text-white">{{ $job->company->name }} - {{ $job->location }}</p>
                 <p class="text-sm text-white">{{'$'. number_format($job-> salary) }} / Year</p>
              </div>
