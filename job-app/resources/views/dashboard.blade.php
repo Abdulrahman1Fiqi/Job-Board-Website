@@ -16,26 +16,47 @@
     <div class="flex items-center justify-between">
 
         <!-- Search Bar -->
-        <form action="" class="flex items-center justify-center w-1/4">
-            <input type="text" class="w-full p-2 rounded-l-lg bg-gray-800 text-white" placeholder="Search for a job" >
+        <form action="{{ route('dashboard') }}" method="get" class="flex items-center justify-center w-1/4">
+            <input type="text" name="search" value="{{ request('search') }}"
+             class="w-full p-2 rounded-l-lg bg-gray-800 text-white" placeholder="Search for a job" >
             <button type="submit" class="bg-indigo-500 text-white p-2 rounded-r-lg border border-indigo-500">
                 Search
             </button>
+
+            @if (request('filter'))
+                <input type="hidden" name="filter" value="{{ request('filter') }}">
+            @endif
+
+            @if (request('search'))
+                <a href="{{ route('dashboard',['filter'=>request('filter')]) }}"
+                class=" text-white p-2 rounded-lg">Clear</a>
+            @endif
+
         </form>
 
         <!-- Filters -->
         <div class="flex space-x-2">
-            <a class="bg-indigo-500 text-white p-2 rounded-lg">Full-Time</a>
-            <a class="bg-indigo-500 text-white p-2 rounded-lg">Remote</a>
-            <a class="bg-indigo-500 text-white p-2 rounded-lg">Hybrid</a>
-            <a class="bg-indigo-500 text-white p-2 rounded-lg">Contract</a>
+            <a href="{{ route('dashboard',['filter'=>'Full-Time','search'=>request('search')]) }}"
+            class="bg-indigo-500 text-white p-2 rounded-lg">Full-Time</a>
+            <a href="{{ route('dashboard',['filter'=>'Remote','search'=>request('search')]) }}"
+            class="bg-indigo-500 text-white p-2 rounded-lg">Remote</a>
+            <a href="{{ route('dashboard',['filter'=>'Hybrid','search'=>request('search')]) }}"
+            class="bg-indigo-500 text-white p-2 rounded-lg">Hybrid</a>
+            <a href="{{ route('dashboard',['filter'=>'Contract','search'=>request('search')]) }}"
+            class="bg-indigo-500 text-white p-2 rounded-lg">Contract</a>
+
+            @if (request('filter'))
+                <a href="{{ route('dashboard',['search'=>request('search')]) }}"
+                class=" text-white p-2 rounded-lg">Clear</a>
+            @endif
+
         </div>
 
     </div>
 
     <!-- Job List -->
      <div class="space-y-4 mt-6">
-        @foreach ($jobs as $job )
+        @forelse ($jobs as $job )
         <!-- Job item -->
         <div class="border-b border-white/10 pb-4 flex justify-between items-center">
              <div>
@@ -45,7 +66,9 @@
              </div>
              <span class="bg-blue-500 text-white p-2 rounded-lg">{{ $job->type }}</span>
         </div>
-        @endforeach
+        @empty
+            <p class="text-white text-2xl font-bold">No jobs found!</p>
+        @endforelse
      </div>
 
         <div class="mt-6">
