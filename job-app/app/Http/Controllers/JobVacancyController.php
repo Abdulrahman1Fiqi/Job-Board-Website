@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\JobVacancy;
 
+use OpenAI\Laravel\Facades\OpenAI;
+
 class JobVacancyController extends Controller
 {
     public function show(string $id){
@@ -18,5 +20,14 @@ class JobVacancyController extends Controller
 
     public function processApplication(Request $request,string $id){
         
+    }
+
+    public function testOpenAI(){
+            $response = OpenAI::responses()->create([
+            'model' => 'gpt-5',
+            'input' => 'Hello!',
+        ]);
+
+        echo $response->outputText; // Hello! How can I assist you today?
     }
 }
