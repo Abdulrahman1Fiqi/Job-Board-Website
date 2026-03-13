@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\JobApplication;
+use App\Models\Resume;
 use Illuminate\Http\Request;
 use App\Models\JobVacancy;
 
 use OpenAI\Laravel\Facades\OpenAI;
 use GuzzleHttp\Client;
+use App\Http\Requests\ApplyJobRequest;
 
 class JobVacancyController extends Controller
 {
@@ -16,11 +19,79 @@ class JobVacancyController extends Controller
     }
     public function apply(string $id){
         $jobVacancy = JobVacancy::findOrFail($id);
-        return view('job-vacancies.apply',compact('jobVacancy'));
+        $resumes = auth()->user()->resumes()->get();
+        return view('job-vacancies.apply',compact('jobVacancy','resumes'));
     }
 
-    public function processApplication(Request $request,string $id){
-        
+    public function processApplication(ApplyJobRequest $request,string $id){
+
+        $resumeId = null;
+        $extractedInfo = null;
+
+        if($request->input('resume_option'==='new_resume')){
+            $file = $request->file('resume_file');
+            $extension = $file->getClientOriginalExtension();
+            $originalFileName = $file->getClientOriginalName();
+            $fileName = 'resume_'.time().'.'.$extension;
+            
+            // Store in Laravel Cloud
+            $path = $file->storeAs('resumes',$fileName,'cloud');
+
+        //  $fileUrl = config('filesystems.disks.cloud.url').'/'.$path;
+
+            // todo: Extract information from the resume
+
+            $extractedInfo = [
+                'summary'=>'',
+                'skills'=>'',
+                'experience'=>'',
+                'education'=>'',
+            ];
+
+            $resume = Resume::create([
+                'filename'=>$originalFileName,
+                'fileUrl'=>$path,
+                'userId'=>auth()->id(),
+                'contactDetails'=>json_encode([
+                    'name'=>auth()->user()->name,
+                    'email'=>auth()->user()->email,
+                ]),
+                'summary'=>$extractedInfo['summary'],
+                'skills'=>$extractedInfo['skills'],
+                'experience'=>$extractedInfo['experience'],
+                'education'=>$extractedInfo['education'],
+                
+            ]);
+
+           $resumeId =$resume->id;
+
+        } else{
+            $resumeId = $request->input('resume_option');
+            $resume = Resume::findOrFail($resumeId);
+
+            $extractedInfo = [
+                'summary'=>$resume->summary,
+                'skills'=>$resume->skills,
+                'experience'=>$resume->experience,
+                'education'=>$resume->education,
+            ];
+
+        }
+
+        // TODO: Evaluate Job Application
+        // Use the $extractedInfo to evaluate the job application
+
+         JobApplication::create([
+                'status'=>'pending',
+                'jobVacancyId'=>$id,
+                'resumeId'=>$resume->id,
+                'userId'=>auth()->id(),
+                'aiGeneratedScore'=>0,
+                'aiGeneratedFeedback'=>'',
+            ]);
+
+        return redirect()->route('job-applications.index',$id)->with('success','Applicantion submitted successfully!');
+
     }
 
     public function testClaude(){
