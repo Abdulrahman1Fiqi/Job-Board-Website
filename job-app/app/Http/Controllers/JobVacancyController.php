@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\JobApplication;
 use App\Models\Resume;
+use App\Services\ResumeAnalysisService;
 use Illuminate\Http\Request;
 use App\Models\JobVacancy;
+
 
 use OpenAI\Laravel\Facades\OpenAI;
 use GuzzleHttp\Client;
@@ -13,6 +15,16 @@ use App\Http\Requests\ApplyJobRequest;
 
 class JobVacancyController extends Controller
 {
+
+    protected $resumeAnalysisService;
+
+    public function __construct(ResumeAnalysisService $resumeAnalysisService){
+        $this->resumeAnalysisService =$resumeAnalysisService;
+    }
+
+
+
+
     public function show(string $id){
         $jobVacancy = JobVacancy::findOrFail($id);
         return view('job-vacancies.show',compact('jobVacancy'));
@@ -28,7 +40,7 @@ class JobVacancyController extends Controller
         $resumeId = null;
         $extractedInfo = null;
 
-        if($request->input('resume_option'==='new_resume')){
+        if($request->input('resume_option') === 'new_resume'){
             $file = $request->file('resume_file');
             $extension = $file->getClientOriginalExtension();
             $originalFileName = $file->getClientOriginalName();
@@ -37,16 +49,11 @@ class JobVacancyController extends Controller
             // Store in Laravel Cloud
             $path = $file->storeAs('resumes',$fileName,'cloud');
 
-        //  $fileUrl = config('filesystems.disks.cloud.url').'/'.$path;
+          $fileUrl = config('filesystems.disks.cloud.url').'/'.$path;
 
             // todo: Extract information from the resume
 
-            $extractedInfo = [
-                'summary'=>'',
-                'skills'=>'',
-                'experience'=>'',
-                'education'=>'',
-            ];
+            $extractedInfo = $this->resumeAnalysisService->extractResumeInformation($fileUrl);
 
             $resume = Resume::create([
                 'filename'=>$originalFileName,
