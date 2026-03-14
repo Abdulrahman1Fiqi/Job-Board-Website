@@ -6,9 +6,17 @@ use Illuminate\Support\Facades\Storage;
 use Spatie\PdfToText\Pdf;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
+use App\Services\ClaudeService;
 
 class ResumeAnalysisService 
 {
+
+     private $claudeService;
+
+    public function __construct(ClaudeService $claudeService)
+    {
+        $this->claudeService = $claudeService;
+    }
 
     public function extractResumeInformation(string $fileUrl){
 
@@ -21,17 +29,8 @@ class ResumeAnalysisService
         // Use Claude API to organize the text into a structured format
 
       
-            $client = new Client([
-                'base_uri' => 'https://api.anthropic.com/',
-                'headers' => [
-                    'x-api-key' => env('CLAUDE_API_KEY'),
-                    'Content-Type' => 'application/json',
-                    'anthropic-version' => '2023-06-01',
-                ],
-            ]);
 
-            $response = $client->post('v1/messages', [
-                'json' => [
+            $response = $this->claudeService->sendMessage( [
                     'model' => 'claude-sonnet-4-6',
                     'max_tokens' => 1024,
                     'temperature' => 0.1, 
@@ -42,8 +41,6 @@ class ResumeAnalysisService
                             'content' => "Parse the following resume content and extract the information as a JSON object with the exact keys: 'summary', 'skills', 'experience', 'education'. Return an empty string for any key not found. Resume content: {$rawText}"
                         ],
                     ],
-                
-                ]
             ]);
 
             $data = json_decode($response->getBody(), true);
@@ -105,6 +102,88 @@ class ResumeAnalysisService
 
 
 
+    public function analyzeResume($jobVacancy, $resumeData){
+        try {
+            
+        
+        $jobDetails = json_encode([
+            'job_title'=> $jobVacancy->title,
+            'job_description'=> $jobVacancy->description,
+            'job_location'=> $jobVacancy->location,
+            'job_type'=> $jobVacancy->type,
+            'job_salary'=> $jobVacancy->salary,
+        ]);
+
+        $resumeDetails = json_encode($resumeData);
+
+
+        $response = $this->claudeService->sendMessage( [
+                    'model' => 'claude-sonnet-4-6',
+                    'max_tokens' => 1024,
+                    'temperature' => 0.1, 
+                    'system' => "You are an expert HR professional and job recruiter.
+                     You are given a job vacancy and a resume. 
+                     Your task is to analyze the resume and determine if the candidate is a good fit for the job. 
+                     The output must be in JSON format.
+                     Provide a score from 0 to 100 for the candidate's suitability for the job, and a detailed feedback.
+                     Response should only be JSON that has the following keys: 'aiGeneratedScore', 'aiGeneratedFeedback'.
+                     AiGenerate feedback should be detailed and specific to the job and the candidate's resume.",
+                    'messages' => [
+                        [
+                            'role' => 'user',
+                            'content' => "Please evaluate this job application. Job Details: {$jobDetails}. Resume Details: {$resumeDetails}."
+                        ],
+                    ],
+            ]);
+
+
+
+        $data = json_decode($response->getBody(), true);
+
+        $text = $data['content'][0]['text'];
+
+        $text = preg_replace('/^```json\s*|\s*```$/s', '', trim($text));
+
+        Log::debug('Claude Evaluation Response: '.$text);
+
+        if (empty($text)) {
+                throw new \Exception('Claude returned empty content');
+            }
+
+            // {!! nl2br(e($result['aiGeneratedFeedback'])) !!}
+
+
+        $parsed = json_decode($text, true);
+
+            if (!is_array($parsed)) {
+                Log::error('Parsed JSON is invalid', ['raw' => $text]);
+                throw new \Exception('Invalid JSON returned from Claude');
+            }
+
+
+            if (json_last_error() !== JSON_ERROR_NONE) {
+            Log::error('Failed to parse OpenAI response: ' . json_last_error_msg());
+            throw new \Exception('Failed to parse Claude response');
+        }
+
+        if(!isset($parsed['aiGeneratedScore']) || !isset($parsed['aiGeneratedFeedback'])) {
+            Log::error('Missing required keys in the parsed result');
+            throw new \Exception('Missing required keys in the parsed result');
+        }
+
+        return $parsed;
+
+
+
+        } catch (\Exception $e) {
+            Log::error('Error analyzing resume: ' . $e->getMessage());
+            return [
+                'aiGeneratedScore' => 0,
+                'aiGeneratedFeedback' => 'An error occurred while analyzing the resume. Please try again later.'
+            ];
+        }
+
+    }
 
     
 
