@@ -51,7 +51,7 @@ class JobVacancyController extends Controller
 
           $fileUrl = config('filesystems.disks.cloud.url').'/'.$path;
 
-            // todo: Extract information from the resume
+            // Extract information from the resume
 
             $extractedInfo = $this->resumeAnalysisService->extractResumeInformation($fileUrl);
 
@@ -115,7 +115,7 @@ class JobVacancyController extends Controller
 
         $response = $client->post('v1/messages', [
             'json' => [
-                'model' => 'claude-sonnet-4-6', // الموديل الموجود فعليًا
+                'model' => 'claude-sonnet-4-6', 
                 'messages' => [
                     ["role" => "user", "content" => "Hello Claude, tell me a joke!"]
                 ],
@@ -125,7 +125,7 @@ class JobVacancyController extends Controller
 
         $data = json_decode($response->getBody(), true);
 
-        // اطبع الرد
+    
         echo $data['completion'] ?? ($data['content'][0]['text'] ?? 'No text returned');
 
     } catch (\Exception $e) {
