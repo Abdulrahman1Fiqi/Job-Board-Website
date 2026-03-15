@@ -6,6 +6,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{ config('app.name', 'Laravel') }}</title>
+        <link rel="icon" type="image/png" href="{{ asset('images/logo1.png') }}">
         
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -23,7 +24,7 @@
         <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
             <div>
                 <a href="/">
-                    <img src="{{ asset('images/logo.png') }}" alt="Job Board" class="w-40 h-40 fill-current text-gray-500" />
+                    <img src="{{ asset('images/logo.png') }}" alt="Job Board" class="w-72 h-auto fill-current text-gray-500" />
                 </a>
             </div>
 
