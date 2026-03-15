@@ -2,8 +2,8 @@
     <!-- Application logo -->
     <div class="flex items-center px-6 border-b border-gray-200 py-4">
         <a href="{{ route('dashboard') }}" class="flex items-center space-x-2">
-            <x-application-logo class="h-6 w-auto fill-current text-gray-800"/>
-            <span class="text-lg font-semibold text-gray-800">Abdo</span>
+            <img src="{{ asset('images/logo1.png') }}" alt="Job Board" class="h-6 w-auto fill-current text-gray-800"/>
+            <span class="text-lg font-semibold text-gray-800">HireHub</span>
         </a>
     </div>
     <!-- Navigation links -->
