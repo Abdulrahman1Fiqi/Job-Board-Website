@@ -50,7 +50,7 @@
         <div class="mb-8" x-cloak x-show="show" x-transition:enter="transition ease-out duration-700"
             x-transition:enter-start="opacity-0 scale-90" x-transition:enter-end="opacity-100 scale-100">
             <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-300 hover:text-white transition-colors" />
+                <x-application-logo class="w-72 h-auto fill-current text-gray-300 hover:text-white transition-colors" />
             </a>
         </div>
 

@@ -1,4 +1,4 @@
-<x-main-layout title="Shaghalni - Find your dream job">
+<x-main-layout title="HireHub - Find your dream job">
     <div x-data="{ show: false }" x-init="setTimeout(() => show = true, 300)">
         <div class="inline-flex items-center mb-2"
              x-cloak
@@ -8,7 +8,7 @@
              x-transition:enter-end="opacity-100 scale-100">
 
             <h4 class="text-sm text-white/60 rounded-full bg-white/10 px-3 py-1 w-fit">
-                Shaghalni
+                HireHub
             </h4>
 
         </div>
