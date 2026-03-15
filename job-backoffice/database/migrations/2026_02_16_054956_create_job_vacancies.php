@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('description');
             $table->string('location');
             $table->string('salary');
-            $table->enum('type',['Full-Time','Contract','Remote','Hybrid'])->default('Full-Time');
+            $table->enum('type',['Full-time','Contract','Remote','Hybrid'])->default('Full-Time');
             $table->timestamps();
             $table->softDeletes();
 
