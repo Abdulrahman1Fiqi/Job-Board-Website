@@ -121,13 +121,17 @@ class ResumeAnalysisService
                     'model' => 'claude-sonnet-4-6',
                     'max_tokens' => 1024,
                     'temperature' => 0.1, 
-                    'system' => "You are an expert HR professional and job recruiter.
-                     You are given a job vacancy and a resume. 
-                     Your task is to analyze the resume and determine if the candidate is a good fit for the job. 
-                     The output must be in JSON format.
-                     Provide a score from 0 to 100 for the candidate's suitability for the job, and a detailed feedback.
-                     Response should only be JSON that has the following keys: 'aiGeneratedScore', 'aiGeneratedFeedback'.
-                     AiGenerate feedback should be detailed and specific to the job and the candidate's resume.",
+                    'system' =>    "You are an expert HR professional and job recruiter.
+                                    You are given a job vacancy and a resume.
+                                    Your task is to analyze the resume and determine if the candidate is a good fit for the job.
+                                    The output must be in JSON format.
+                                    Provide a score from 0 to 100 for the candidate's suitability for the job, and concise feedback.
+                                    Response should only be JSON that has the following keys: 'aiGeneratedScore', 'aiGeneratedFeedback'.
+                                    For aiGeneratedFeedback follow these rules strictly:
+                                    - Plain text only: no markdown, no asterisks, no bold, no bullet symbols, no dashes, no special characters.
+                                    - Use short paragraphs or numbered lines (1. 2. 3.) if listing points.
+                                    - Keep the total feedback under 120 words.
+                                    - Be specific to the job and the candidate's resume.",
                     'messages' => [
                         [
                             'role' => 'user',
