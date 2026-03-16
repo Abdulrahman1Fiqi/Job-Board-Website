@@ -36,6 +36,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'last_login_at',
     ];
 
     protected $dates =[
@@ -62,6 +63,7 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'deleted_at'=> 'datetime',
+            'last_login_at' => 'datetime',
         ];
     }
 
