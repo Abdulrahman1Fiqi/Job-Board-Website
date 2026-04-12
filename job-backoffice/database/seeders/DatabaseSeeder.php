@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
             'email'=>'admin@admin.com',
         ],[
             'name'=>'Admin',
-            'password'=>Hash::make('12345678'),
+            'password'=>Hash::make(env('ADMIN_PASSWORD','password')),
             'role'=>'admin',
             'email_verified_at'=>now(),
             
